@@ -1,0 +1,5 @@
+The type of results we are gonna have is the result of the function calculateBinomial with (2,3) and (4,5) (which is 25 and 81 respectively) in the form of an alert in the site. After that we can read two types of two variables:
+
+	|| One if from a variable declared outside of the function, and because we are asking the type outside too, we are going to have as an answer the number of calls to the function. 
+	|| On the other hand we're gonna have an “undefined” type, that’s because the declaration of the variable is inside of the function, and we are making the alert outside. 
+	   The solution of this is putting the alert inside of the function to have the type of squareOfA
