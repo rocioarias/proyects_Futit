@@ -1,4 +1,4 @@
-package javaProblems;
+package java;
 
 public class magicSquare {
 
@@ -10,13 +10,8 @@ public class magicSquare {
         this.size = size;
         this.magicNumber = (int) (((size)*(Math.pow(size, 2)+1))/2);
         this.result = fullZeros(new int[size][size]);
-        if(size == 7){
-            fillSquareNotOdd(size, result);
-        }
-        else{
-            this.result = fullNumbers(size,new int[size][size]);
-            fillSquareOdd(size, result);
-        }
+        fillSquareOdd(size, result);
+        /*Working in a the other 3 options = Odd 2, multiples of 4 and multiples of 4 + 2 */
     }
 
 /* ---------------------------------------- Methods ---------------------------------------------- */
@@ -29,23 +24,14 @@ public class magicSquare {
         return square;
     }
 
-    private int[][] fullNumbers(int s, int[][] square){
-        for(int i = 0; i < s; i++){
-            for(int j = 0; j < s; j++){
-                square[i][j] = (s*i) + j + 1;    
-            }
-        }
-        return square;
-    }
-
-    public void fillSquareNotOdd(int s, int[][]square){
+    public void fillSquareOdd(int s, int[][]square){
         int r = s-1;
         int c = s/2;
     
         square[r][c] = 1;
 
         for(int i=2; i <= s*s; i++){
-            int verification = square[(r+1)% s][(c+1) % s];
+            int verification = square[(r+1)%s][(c+1) %s];
             if (verification == 0) {
                 r = (r+1) % s;
                 c = (c+1) % s;
@@ -54,44 +40,6 @@ public class magicSquare {
                 r = (r-1+s) % s;
             }
             square[r][c] = i;
-        }
-    }
-
-    public void fillSquareOdd(int s, int[][]square){
-        int i,j;
-        for ( i = 0; i<s/4; i++){
-            for ( j = 0; j<s/4; j++){
-                square[i][j] = (s*s + 1) - square[i][j];
-            }   
-        }
-        
-        for ( i = 0; i<s/4; i++){
-            for ( j = 0; j<s/4; j++){
-                square[i][j] = (s*s + 1) - square[i][j];
-            }
-        }
-
-        for ( i = 0; i< s/4; i++){
-            for ( j = 3* (s/4); j<s; j++){
-                square[i][j] = (s*s + 1) - square[i][j];
-            }
-        }
-        for ( i = 3* s/4; i<s; i++){
-            for ( j = 0; j<s/4; j++){
-                square[i][j] = (s*s + 1) - square[i][j];
-            }
-        }
-        for ( i = 3* s/4; i<s; i++){
-            for ( j = 3* s/4; j<s; j++){
-                square[i][j] = (s*s + 1) - square[i][j];
-            }
-        }
-     
-        for ( i = s/4; i<3* s/4; i++){
-            for ( j = s/4; j<3* s/4; j++){
-                square[i][j] = (s*s + 1) - square[i][j];
-            }
-                
         }
     }
 
