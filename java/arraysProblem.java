@@ -1,7 +1,5 @@
 package java;
 
-import java.util.Arrays;
-
 public class arraysProblem {
 
     private int amountOfZeros;
@@ -20,7 +18,8 @@ public class arraysProblem {
         // If the array has only one or zero elements, doesn't need to be organizate. 
         if(toSort.length > 1){
             quickSort(0, toSort.length-1);
-        } 
+        }
+        replaceZeros(); 
     }
 
     /*
@@ -52,21 +51,68 @@ public class arraysProblem {
 	}
 
     /*
-     * replaceZeros is the one who is taking more time, that make the algorithm has an average of time O(n). 
+     * Now we have an array with all the zeros in the right, and plus that, all the numbers in order.
+     * To mantein a good amount of time in the algorithm, the binary search is a good option
+     * to find the first zero in the array. 
      */
 
+     private static int binarySearch(int[] arr) {
+        int left = 0;
+        int right = arr.length - 1;
+    
+        while (left <= right) {
+            int middle = (left + right) / 2;
+    
+            if ((arr[middle] == 0) && (arr[middle - 1] != 0)) {
+                return middle;
+            } else if (arr[middle] > 0) {
+                left = middle + 1;
+            } else {
+                right = middle - 1;
+            }
+        }
+        return -1;
+    }
+    /*
+     * To replace the zeros in the array we have to check if the length of the array is bigger then one.
+     * If the arrays only has one element we replace, if is necesary, the zero inside for the -22.
+     * As a second scenario, we gonna use the binary search and do the replacement.
+     */
     private void replaceZeros(){
-        toSort = Arrays.stream(toSort).map(i -> i == 0 ? -22 : i).toArray(); 
+        if(toSort.length == 1){
+            if (toSort[0] == 0){toSort[0] = -22;}
+        }
+        else{
+            int firstZero = binarySearch(toSort);
+            if (firstZero != -1){
+                    int zeros = 0;
+                    for(int i = firstZero; i < toSort.length; i++){
+                        toSort[i] = -22;
+                        zeros++;
+                    }
+                    setAmountOfZeros(zeros);
+                }
+            }
     }
 
     @Override
     public String toString() {
         String array = "";
-        replaceZeros();
         for(int i = 0; i < toSort.length; i++){
             array += toSort[i] + " ";
         }
         return array;
     }
+
+    /*
+     *  ------------------------- TIMES OF THE ALGORITHM -----------------------------------------
+     *    In average cases, the big O for quicksort is n*log(n) as the same for the binary serch wich is log(n), so the 
+     *    time is determinated by replaceZeros().
+     *    The ecuation is: 
+     *    n 
+     *    ∑ c = ((n - k) + 1) * c  || n = length of the array, k = index of the first zero in the array, c = the time of the replaces
+     *  i = k  
+     */
     
 }
+     
